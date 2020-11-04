@@ -8,7 +8,15 @@ output:
 
 # This is wwzoey's personal website!
 
-I am currently a graduate student of Mailman School of Public Health in Columbia University.
+I am currently taking P8105 course and learning some cool stuff of data science.
+
+I made a website for myself!
+
+This website contains:
+
+* [Resume](resume.html)
+* [Plotly](plotly.html)
+* [Dashboard](dashboard.html)
 
 # Orange Juice.
 

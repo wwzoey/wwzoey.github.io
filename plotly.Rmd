@@ -39,16 +39,20 @@ instacart %>%
   group_by(order_dow) %>%
   count(order_hour_of_day) %>%
   mutate(
-    text_label = str_c("Time:",order_hour_of_day,"hr","\nOrders:#",n),
+    text_label = str_c("Time:",order_hour_of_day,"hr","\nOrders:",n),
     order_dow = fct_relevel(order_dow,c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))) %>%
   plot_ly(
-    x = ~order_hour_of_day, y = ~n, type = "scatter", color = ~order_dow, mode = "lines",text = ~text_label,alpha = 0.5)
+    x = ~order_hour_of_day, y = ~n, type = "scatter", color = ~order_dow, mode = "lines",text = ~text_label,alpha = 0.5) %>%
+  layout(
+    title = "Orders over 24 Hours")
 ```
+
+From the graph, we can see that on Sunday, there will be much more orders placed than the other days of the week. Within one day, most oders are placed between 9 am to 18 pm.
 
 
 ## boxplot
 
-Among the products that have been ordered previously, what kinds of peoducts are relatively easy to be consumed? Or what products do people tend to buy regularly without too much stocking-up?
+Among the products that have been ordered previously, what kinds of products are relatively easy to be consumed? Or what products do people tend to buy regularly without too much stocking-up?
 
 ```{r}
 
@@ -57,10 +61,14 @@ instacart %>%
          department != "missing") %>%
   mutate(department = reorder(department,days_since_prior_order)) %>%
   plot_ly(
-    x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5)
+    x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5) %>%
+  layout(
+    title = "Days Since Prior Order between departments")
 
   
 ```
+
+From the graph above, the products from the department of "babies" have a relatively short time interval from the prior order, which could indicate that babies products are the ones that people would like to buy regularly.
 
 ## bar chart
 
@@ -71,6 +79,9 @@ instacart %>%
   filter(add_to_cart_order == '1') %>%
   count(department) %>%
   mutate(department = fct_reorder(department, n)) %>% 
-  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar", colors = "viridis")
+  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar", colors = "viridis") %>%
+  layout(
+    title = "Frequency of being first added to cart")
 ```
 
+The bar chart shows that the products from the department of "produce" have the highest frequency of being added first. Inversely, the products of "bulk" tend to be the last addition to the cart. 
