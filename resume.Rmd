@@ -1,0 +1,48 @@
+---
+title: "Resume"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Contact info
+
+Wenzhao Wu
+
+* Tel: +8615912312312
+* Email: <ww2579@cumc.columbia.edu>
+* Address: Room ###, ####, Shandong Province, China
+
+
+# Education
+
+2015/09-2019/03 
+
+* University of California, Irvine
+   Bachelor of Science in Biological Sciences
+
+2020/09-Present
+
+* Columbia University
+   MS of Biostatistics
+  
+  
+# Internships
+
+## Experience 1
+
+2019/11-2019/12   
+
+* Shouguang City Center for Disease Control and Prevention
+
+Assisted in researching the epidemic conditions and disease control after the typhoon in August;
+
+## Experience 2
+
+2018/08-2018/09   
+
+* Weifang Academy of Agricultural Sciences
+
+Compared the growth of soybeans of various varieties and the yield factors.
+  
