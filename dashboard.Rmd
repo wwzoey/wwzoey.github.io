@@ -1,0 +1,72 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+
+library(flexdashboard)
+```
+
+
+```{r}
+data("instacart")
+
+
+instacart = instacart %>% 
+  select(reordered,add_to_cart_order,order_hour_of_day,days_since_prior_order,product_name,order_dow,aisle,department) %>%
+  mutate(
+    order_hour_of_day = as.factor(order_hour_of_day),
+    order_dow = 
+           as.factor(recode(order_dow,'0' = "Sun",'1' = "Mon",'2' = "Tue",'3' = "Wed",'4' = "Thu",'5' = "Fri",'6' = "Sat")))
+  
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Line graph
+
+```{r}
+instacart %>%
+  group_by(order_dow) %>%
+  count(order_hour_of_day) %>%
+  mutate(
+    text_label = str_c("Time:",order_hour_of_day,"hr","\nOrders:#",n),
+    order_dow = fct_relevel(order_dow,c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))) %>%
+  plot_ly(
+    x = ~order_hour_of_day, y = ~n, type = "scatter", color = ~order_dow, mode = "lines",text = ~text_label,alpha = 0.5)
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Boxplot
+
+```{r}
+instacart %>%
+  filter(reordered == '1',
+         department != "missing") %>%
+  mutate(department = reorder(department,days_since_prior_order)) %>%
+  plot_ly(
+    x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5)
+
+```
+
+### Bar chart
+
+```{r}
+instacart %>%
+  filter(add_to_cart_order == '1') %>%
+  count(department) %>%
+  mutate(department = fct_reorder(department, n)) %>% 
+  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar", colors = "viridis")
+```
+
