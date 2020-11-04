@@ -11,7 +11,7 @@ output:
 Wenzhao Wu
 
 * Tel: +8615912312312
-* Email: <ww2579@cumc.columbia.edu>
+* Email: ww2579@cumc.columbia.edu
 * Address: Room ###, ####, Shandong Province, China
 * [Github](https://github.com/wwzoey/)
 

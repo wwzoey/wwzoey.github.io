@@ -10,7 +10,7 @@ navbar:
     - text: "Dashboard"
       href: dashboard.html
     - icon: fa-envelope fa-lg
-      href: mailto:<ww2579@cumc.columbia.edu>
+      href: mailto:ww2579@cumc.columbia.edu
     - icon: fa-github fa-lg
       href: http://github.com/wwzoey/
 output:
