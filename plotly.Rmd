@@ -55,7 +55,6 @@ From the graph, we can see that on Sunday, there will be much more orders placed
 Among the products that have been ordered previously, what kinds of products are relatively easy to be consumed? Or what products do people tend to buy regularly without too much stocking-up?
 
 ```{r}
-
 instacart %>%
   filter(reordered == '1',
          department != "missing") %>%
@@ -64,8 +63,6 @@ instacart %>%
     x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5) %>%
   layout(
     title = "Days Since Prior Order between departments")
-
-  
 ```
 
 From the graph above, the products from the department of "babies" have a relatively short time interval from the prior order, which could indicate that babies products are the ones that people would like to buy regularly.

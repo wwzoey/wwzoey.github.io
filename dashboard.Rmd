@@ -39,10 +39,12 @@ instacart %>%
   group_by(order_dow) %>%
   count(order_hour_of_day) %>%
   mutate(
-    text_label = str_c("Time:",order_hour_of_day,"hr","\nOrders:#",n),
+    text_label = str_c("Time:",order_hour_of_day,"hr","\nOrders:",n),
     order_dow = fct_relevel(order_dow,c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))) %>%
   plot_ly(
-    x = ~order_hour_of_day, y = ~n, type = "scatter", color = ~order_dow, mode = "lines",text = ~text_label,alpha = 0.5)
+    x = ~order_hour_of_day, y = ~n, type = "scatter", color = ~order_dow, mode = "lines",text = ~text_label,alpha = 0.5) %>%
+  layout(
+    title = "Orders over 24 Hours")
 ```
 
 Column {data-width=350}
@@ -56,8 +58,9 @@ instacart %>%
          department != "missing") %>%
   mutate(department = reorder(department,days_since_prior_order)) %>%
   plot_ly(
-    x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5)
-
+    x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5) %>%
+  layout(
+    title = "Days Since Prior Order between departments")
 ```
 
 ### Bar chart
@@ -67,6 +70,8 @@ instacart %>%
   filter(add_to_cart_order == '1') %>%
   count(department) %>%
   mutate(department = fct_reorder(department, n)) %>% 
-  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar", colors = "viridis")
+  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar", colors = "viridis") %>%
+  layout(
+    title = "Frequency of being first added to cart")
 ```
 
