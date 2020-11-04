@@ -1,0 +1,76 @@
+---
+title: "Plotly"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# This page contains plotly graphics.
+
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+# loading Instacart data
+
+```{r}
+data("instacart")
+
+
+instacart = instacart %>% 
+  select(reordered,add_to_cart_order,order_hour_of_day,days_since_prior_order,product_name,order_dow,aisle,department) %>%
+  mutate(
+    order_hour_of_day = as.factor(order_hour_of_day),
+    order_dow = 
+           as.factor(recode(order_dow,'0' = "Sun",'1' = "Mon",'2' = "Tue",'3' = "Wed",'4' = "Thu",'5' = "Fri",'6' = "Sat")))
+  
+```
+
+
+## line graph
+
+On which day of the week and on what time of the day are the orders placed the most?
+
+```{r}
+instacart %>%
+  group_by(order_dow) %>%
+  count(order_hour_of_day) %>%
+  mutate(
+    text_label = str_c("Time:",order_hour_of_day,"hr","\nOrders:#",n),
+    order_dow = fct_relevel(order_dow,c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))) %>%
+  plot_ly(
+    x = ~order_hour_of_day, y = ~n, type = "scatter", color = ~order_dow, mode = "lines",text = ~text_label,alpha = 0.5)
+```
+
+
+## boxplot
+
+Among the products that have been ordered previously, what kinds of peoducts are relatively easy to be consumed? Or what products do people tend to buy regularly without too much stocking-up?
+
+```{r}
+
+instacart %>%
+  filter(reordered == '1',
+         department != "missing") %>%
+  mutate(department = reorder(department,days_since_prior_order)) %>%
+  plot_ly(
+    x = ~department, y = ~days_since_prior_order, type = "box", color = "viridis", alpha = 0.5)
+
+  
+```
+
+## bar chart
+
+Which department's products are the most frequently to be first added into the cart?
+
+```{r}
+instacart %>%
+  filter(add_to_cart_order == '1') %>%
+  count(department) %>%
+  mutate(department = fct_reorder(department, n)) %>% 
+  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar", colors = "viridis")
+```
+
